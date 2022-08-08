@@ -4,7 +4,7 @@ import data from "../utils/data";
 export default function Home() {
   return (
     <div>
-      <Layout title='Home Page'>{data}</Layout>
+      <Layout title='Home Page'>{data.products}</Layout>
     </div>
   );
 }

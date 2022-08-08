@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
+
 
 const ProductItem = ({ product }) => {
   return (
     <div className='card'>
-      <Link href={`/product/${product.slug}`}>
+      <Link href={`/product/${product.slug}.js`}>
         <a>
           <img
             src={product.image}

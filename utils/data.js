@@ -49,8 +49,8 @@ const data = {
       description: "A popular shirt",
     },
     {
-      name: "Golf Pants",
-      slug: "golf-pants",
+      name: "Golf Pants3",
+      slug: "golf-pant3",
       category: "Pants",
       image: "/images/pants2.jpg",
       price: 90,
@@ -61,8 +61,8 @@ const data = {
       description: "SMart looking pants",
     },
     {
-      name: "Golf Pants",
-      slug: "golf-pants",
+      name: "Golf Pants2",
+      slug: "golf-pant2",
       category: "Pants",
       image: "/images/pants3.jpg",
       price: 90,
