@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React from "react";
 import Navbar from "./navbar";
+import Products from "./Products";
 
 const Layout = ({ title, children }) => {
   return (
@@ -14,7 +15,9 @@ const Layout = ({ title, children }) => {
         <header>
           <Navbar />
         </header>
-        <main className='container m-auto mt-4 px-4 '>{children}</main>
+        <main className='container m-auto mt-4 px-4 '>
+          <Products>{children}</Products>
+        </main>
         <footer className='flex justify-center items-center h-10 shadow-inner'>
           Copyright &copy; 2022 Zicomm
         </footer>

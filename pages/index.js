@@ -1,10 +1,10 @@
-import Head from "next/head";
 import Layout from "../components/Layout";
+import data from "../utils/data";
 
 export default function Home() {
   return (
     <div>
-      <Layout>This is an awesome project</Layout>
+      <Layout title='Home Page'>{data}</Layout>
     </div>
   );
 }
