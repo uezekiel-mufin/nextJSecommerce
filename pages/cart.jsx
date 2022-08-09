@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
 import Link from "next/link";
@@ -8,6 +8,7 @@ import Navbar from "../components/navbar";
 import Image from "next/image";
 import { XCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
 const CartScreen = () => {
   const router = useRouter();
@@ -18,10 +19,11 @@ const CartScreen = () => {
   };
 
   const handleQtyChange = (item, countInStock) => {
-    const quantity = countInStock;
+    const quantity = +countInStock;
 
     dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
+
   return (
     <div>
       <Head>
@@ -134,4 +136,4 @@ const CartScreen = () => {
   );
 };
 
-export default CartScreen;
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });

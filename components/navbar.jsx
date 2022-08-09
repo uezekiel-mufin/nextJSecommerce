@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
 
 const Navbar = () => {
+  const [cartItemsCount, setCartItemsCount] = useState();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
   console.log(cart);
+
+  useEffect(() => {
+    setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));
+  }, [cart.cartItems, state.cart.cartItems]);
 
   return (
     <div>
@@ -18,9 +23,9 @@ const Navbar = () => {
           <Link href='/cart'>
             <a className='mx-2 relative'>
               Cart
-              {cart?.cartItems?.length > 0 && (
+              {cartItemsCount > 0 && (
                 <span className=' ml-1 rounded-full bg-red-600 px-2 py-1 text-xs font-bold text-white'>
-                  {cart?.cartItems?.reduce((a, c) => a + c.quantity, 0)}
+                  {cartItemsCount}
                 </span>
               )}
             </a>
