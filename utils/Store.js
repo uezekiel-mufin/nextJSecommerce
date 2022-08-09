@@ -35,6 +35,7 @@ function reducer(state, action) {
         cart: { ...state.cart, cartItems },
       };
     }
+
     default:
       return state;
   }

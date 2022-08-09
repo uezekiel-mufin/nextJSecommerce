@@ -9,7 +9,7 @@ const data = {
       brand: "Oliver",
       rating: 2.9,
       numReviews: 13,
-      countInStock: 20,
+      countInStock: 15,
       description: "SMart looking pants",
     },
     {
@@ -21,7 +21,7 @@ const data = {
       brand: "Raymond",
       rating: 4.5,
       numReviews: 3,
-      countInStock: 20,
+      countInStock: 17,
       description: "A popular shirt",
     },
     {
@@ -33,7 +33,7 @@ const data = {
       brand: "Adidas",
       rating: 3.2,
       numReviews: 10,
-      countInStock: 20,
+      countInStock: 25,
       description: "A popular shirt",
     },
     {
@@ -57,7 +57,7 @@ const data = {
       brand: "Oliver",
       rating: 2.9,
       numReviews: 13,
-      countInStock: 20,
+      countInStock: 19,
       description: "SMart looking pants",
     },
     {

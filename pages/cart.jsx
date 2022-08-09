@@ -12,10 +12,15 @@ import { useRouter } from "next/router";
 const CartScreen = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
-  console.log(state.cart.cartItems);
 
   const handleDeleteFromCart = (product) => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: product });
+  };
+
+  const handleQtyChange = (item, countInStock) => {
+    const quantity = countInStock;
+
+    dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
   };
   return (
     <div>
@@ -63,7 +68,22 @@ const CartScreen = () => {
                             </a>
                           </Link>
                         </td>
-                        <td className='p-5 text-right'>{item.quantity}</td>
+                        <td className='p-5 text-right'>
+                          <select
+                            value={item.quantity}
+                            onChange={(e) =>
+                              handleQtyChange(item, e.target.value)
+                            }
+                          >
+                            {[...Array(item.countInStock).keys()].map(
+                              (item) => (
+                                <option value={item + 1} key={item + 1}>
+                                  {item + 1}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </td>
                         <td className='p-5 text-right'>{item.price}</td>
                         <td className='p-5 text-center'>
                           <button onClick={() => handleDeleteFromCart(item)}>
