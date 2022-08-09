@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React from "react";
 
-
 const ProductItem = ({ product }) => {
   return (
     <div className='card'>
@@ -27,7 +26,7 @@ const ProductItem = ({ product }) => {
         <Link href={`/product/${product.slug}`}>
           <a>
             <button className='primary-button ' type='button'>
-              Add to Cart
+              Review product
             </button>
           </a>
         </Link>

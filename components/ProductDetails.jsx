@@ -4,18 +4,19 @@ import React from "react";
 import Image from "next/image";
 import { Store } from "../utils/Store";
 import { useContext } from "react";
+import Router from "next/router";
+import { useRouter } from "next/router";
 
 const ProductDetail = ({ product }) => {
+  const router = useRouter();
   const { state, dispatch } = useContext(Store);
   console.log(product);
 
   const addToCartHandler = () => {
-    console.log(state.cart.cartItems);
     const existItem = state.cart?.cartItems?.find(
       (item) => item.slug === product.slug
     );
 
-    console.log(existItem);
     const quantity = existItem ? existItem.quantity + 1 : 1;
     if (product.countInStock < quantity) {
       alert("Sorry, Product is out of stock");
@@ -25,12 +26,16 @@ const ProductDetail = ({ product }) => {
       type: "CART_ADD_ITEM",
       payload: { ...product, quantity },
     });
+    router.push("/cart");
   };
 
   return (
     <>
       <div className='my-2'>
         <Link href='/'>back to products</Link>
+        <Link href='/cart'>
+          <a>Go to cart</a>
+        </Link>
       </div>
       <div className='grid md:grid-cols-4 md:gap-3'>
         <div className='md:col-span-2'>
