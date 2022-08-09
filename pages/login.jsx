@@ -11,7 +11,9 @@ const LoginScreen = () => {
     formState: { errors },
   } = useForm();
 
-  const formHandler = ({ email, password }) => {};
+  const formHandler = ({ email, password }) => {
+    console.log(email, password);
+  };
 
   return (
     <div>

@@ -26,11 +26,7 @@ const ProductItem = ({ product }) => {
         <Link href={`/product/${product.slug}`}>
           <a>
             <button className='primary-button ' type='button'>
-<<<<<<< HEAD
-              Review product
-=======
               Review Product
->>>>>>> branch1
             </button>
           </a>
         </Link>
