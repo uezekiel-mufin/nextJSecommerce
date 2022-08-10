@@ -3,26 +3,54 @@ import Link from "next/link";
 import React from "react";
 import Navbar from "../components/navbar";
 import { useForm } from "react-hook-form";
+import signIn from "next-auth/react";
+import { getError } from "../utils/error";
+import { toast, ToastContainer } from "react-toastify";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginScreen = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const { redirect } = router.query;
+
+  useEffect(() => {
+    if (session?.user) {
+      router.push(redirect || "/");
+    }
+  }, [router, session, redirect]);
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
 
-  const formHandler = ({ email, password }) => {
+  const formHandler = async ({ email, password }) => {
     console.log(email, password);
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      if (result.error) {
+        toast.error(result.error);
+      }
+    } catch (err) {
+      toast.error(getError(err));
+    }
   };
 
   return (
     <div>
       <Head>
-        <title>Cart</title>
+        <title>Login</title>
         <meta name='description' content='Zicomm' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
+      <ToastContainer position='bottom-center' />
       <div className='flex min-h-screen justify-between flex-col'>
         <header>
           <Navbar />
@@ -62,8 +90,8 @@ const LoginScreen = () => {
                 {...register("password", {
                   required: "Please enter your password",
                   minLength: {
-                    value: 8,
-                    message: "password should be more than 8 chars",
+                    value: 6,
+                    message: "password should be more than 6 chars",
                   },
                 })}
               />

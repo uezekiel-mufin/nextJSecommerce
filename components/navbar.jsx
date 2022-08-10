@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useContext } from "react";
 import { Store } from "../utils/Store";
+import { useSession } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
+  const { status, data: session } = useSession();
   const [cartItemsCount, setCartItemsCount] = useState();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
@@ -30,9 +33,16 @@ const Navbar = () => {
               )}
             </a>
           </Link>
-          <Link href='/login'>
-            <a className='mx-2'>Login</a>
-          </Link>
+
+          {status === "loading" ? (
+            "loading"
+          ) : session?.user ? (
+            session.user.name
+          ) : (
+            <Link href='/login'>
+              <a className='mx-2'>Login</a>
+            </Link>
+          )}
         </div>
       </nav>
     </div>

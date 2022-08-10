@@ -11,11 +11,15 @@
   "dependencies": {
     "@heroicons/react": "^1.0.6",
     "@types/react": "^18.0.17",
+    "bcryptjs": "^2.4.3",
     "js-cookie": "^3.0.1",
+    "mongoose": "^6.5.1",
     "next": "12.2.4",
+    "next-auth": "^4.10.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-hook-form": "^7.34.0"
+    "react-hook-form": "^7.34.0",
+    "react-toastify": "^9.0.8"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.8",
