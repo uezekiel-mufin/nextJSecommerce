@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import "react-toastify/dist/ReactToastify.css";
 
 const LoginScreen = () => {
+  console.log(useSession());
   const { data: session } = useSession();
   const router = useRouter();
   const { redirect } = router.query;
@@ -21,6 +22,7 @@ const LoginScreen = () => {
       router.push(redirect || "/");
     }
   }, [router, session, redirect]);
+
   const {
     handleSubmit,
     register,
@@ -29,18 +31,22 @@ const LoginScreen = () => {
 
   const formHandler = async ({ email, password }) => {
     console.log(email, password);
+    console.log(session);
+
     try {
       const result = await signIn("credentials", {
         redirect: false,
         email,
         password,
       });
-      if (result.error) {
-        toast.error(result.error);
-      }
+      console.log(result);
+      // if (result.error) {
+      //   toast.error(result.error);
+      // }
     } catch (err) {
       toast.error(getError(err));
     }
+    console.log(session);
   };
 
   return (
