@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Navbar from "../components/navbar";
 import { useForm } from "react-hook-form";
-import signIn from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { getError } from "../utils/error";
 import { toast, ToastContainer } from "react-toastify";
 import { useEffect } from "react";
@@ -39,10 +39,10 @@ const LoginScreen = () => {
         email,
         password,
       });
-      console.log(result);
-      // if (result.error) {
-      //   toast.error(result.error);
-      // }
+
+      if (result.error) {
+        toast.error(result.error);
+      }
     } catch (err) {
       toast.error(getError(err));
     }
