@@ -19,7 +19,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (session?.user) {
-      router.push(redirect || "/");
+      router.push(redirect || "/cart");
     }
   }, [router, session, redirect]);
 
