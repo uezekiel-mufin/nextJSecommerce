@@ -24,7 +24,7 @@ const ProductItem = ({ product }) => {
         <p className='mb-2'>{product.brand}</p>
         <p>${product.price}</p>
         <Link href={`/product/${product.slug}`}>
-          <a>
+          <a className='text-black'>
             <button className='primary-button ' type='button'>
               Review Product
             </button>
