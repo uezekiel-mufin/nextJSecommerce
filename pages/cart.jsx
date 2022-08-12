@@ -9,10 +9,13 @@ import Image from "next/image";
 import { XCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
+import { useSession } from "next-auth/react";
 
 const CartScreen = () => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
+  const { data: session } = useSession();
+  console.log(session);
 
   const handleDeleteFromCart = (product) => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: product });
@@ -117,7 +120,10 @@ const CartScreen = () => {
                     </li>
                     <li>
                       <button
-                        onClick={() => router.push("login?redirect=/shipping")}
+                        onClick={() =>
+                          router.push(session ? "/shipping" : "/login")
+                        }
+                        // onClick={() => router.push("login?redirect=/shipping")}
                         className='primary-button w-full '
                       >
                         Checkout

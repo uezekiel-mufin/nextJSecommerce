@@ -26,7 +26,7 @@ const data = {
       rating: 2.9,
       numReviews: 13,
       countInStock: 15,
-      description: "SMart looking pants",
+      description: "Smart looking pants",
     },
     {
       name: "Slim Shirt",

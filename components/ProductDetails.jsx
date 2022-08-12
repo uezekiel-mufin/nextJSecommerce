@@ -4,21 +4,24 @@ import React from "react";
 import Image from "next/image";
 import { Store } from "../utils/Store";
 import { useContext } from "react";
-import Router from "next/router";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const ProductDetail = ({ product }) => {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   console.log(product);
 
-  const addToCartHandler = () => {
+  const addToCartHandler = async () => {
     const existItem = state.cart?.cartItems?.find(
       (item) => item.slug === product.slug
     );
 
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    if (product.countInStock < quantity) {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+
+    if (data.countInStock < quantity) {
       alert("Sorry, Product is out of stock");
       return;
     }
@@ -26,6 +29,8 @@ const ProductDetail = ({ product }) => {
       type: "CART_ADD_ITEM",
       payload: { ...product, quantity },
     });
+
+    toast.success("Product added to the cart");
     router.push("/cart");
   };
 

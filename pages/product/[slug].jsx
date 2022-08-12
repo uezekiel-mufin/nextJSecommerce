@@ -1,23 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import data from "../../utils/data";
-import { useRouter } from "next/router";
 import Layout from "../../components/Layout";
+import db from "../../utils/db";
+import Product from "../../models/Product";
 
-const ProductDetails = () => {
-  const router = useRouter();
-  const { slug } = router.query;
-
-  const products = data.products.filter((product) => product.slug === slug);
-  console.log(products);
-
-  if (!products) {
-    return <h1>There is no available product</h1>;
+const ProductDetails = ({ product }) => {
+  if (!product) {
+    return <h1>This product is not available</h1>;
   }
-  return <Layout title={products[0]?.name}>{products}</Layout>;
+  return <Layout title={product?.name}>{[product]}</Layout>;
 };
 
 export default ProductDetails;
+
+export async function getServerSideProps(context) {
+  const { slug } = context.params;
+  await db.connect();
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: product ? db.convertDocToObj(product) : null,
+    },
+  };
+}
 
 // export async function getStaticPaths() {
 //   const paths = data.products.map((product) => ({
