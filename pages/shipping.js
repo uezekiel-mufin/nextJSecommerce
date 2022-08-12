@@ -16,7 +16,7 @@ const ShippingScreen = () => {
     register,
     handleSubmit,
     setValue,
-    getValues,
+
     formState: { errors },
   } = useForm();
   const router = useRouter();
