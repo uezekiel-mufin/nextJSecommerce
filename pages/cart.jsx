@@ -10,6 +10,9 @@ import { XCircleIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CartScreen = () => {
   const router = useRouter();
@@ -19,12 +22,14 @@ const CartScreen = () => {
 
   const handleDeleteFromCart = (product) => {
     dispatch({ type: "CART_REMOVE_ITEM", payload: product });
+    toast("Your item has been removed from the cart");
   };
 
-  const handleQtyChange = (item, countInStock) => {
+  const handleQtyChange = async (item, countInStock) => {
     const quantity = +countInStock;
-
+    const { data } = await axios.get(`/api/products/${item._id}`);
     dispatch({ type: "CART_ADD_ITEM", payload: { ...item, quantity } });
+    toast("Your cart item has been updated");
   };
 
   return (
@@ -34,7 +39,7 @@ const CartScreen = () => {
         <meta name='description' content='Zicomm' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-
+      <ToastContainer position='bottom-center' />
       <div className='flex min-h-screen justify-between flex-col'>
         <header>
           <Navbar />

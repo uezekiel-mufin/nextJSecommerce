@@ -6,7 +6,8 @@ import { Store } from "../utils/Store";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetail = ({ product }) => {
   const router = useRouter();
@@ -22,8 +23,7 @@ const ProductDetail = ({ product }) => {
     const { data } = await axios.get(`/api/products/${product._id}`);
 
     if (data.countInStock < quantity) {
-      alert("Sorry, Product is out of stock");
-      return;
+      return toast.error("Sorry, Product is no longer in stock");
     }
     dispatch({
       type: "CART_ADD_ITEM",
@@ -42,6 +42,7 @@ const ProductDetail = ({ product }) => {
           <a>Go to cart</a>
         </Link>
       </div>
+      <ToastContainer position='bottom-center' />
       <div className='grid md:grid-cols-4 md:gap-3'>
         <div className='md:col-span-2'>
           <Image

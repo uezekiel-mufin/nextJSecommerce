@@ -28,7 +28,7 @@ const Payment = () => {
         paymentMethod: selectedPaymentMethod,
       })
     );
-    router.push("/placeorder");
+    router.push("/placeOrder");
   };
 
   useEffect(() => {
