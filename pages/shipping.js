@@ -39,16 +39,10 @@ const ShippingScreen = () => {
   console.log(countries);
   console.log(countryNames);
 
-  const submitHandler = ({
-    fullName,
-    address,
-    city,
-    postalCode,
-    countries,
-  }) => {
+  const submitHandler = ({ fullName, address, city, postalCode, country }) => {
     dispatch({
       type: "SAVE_SHIPPING_ADDRESS",
-      payload: { fullName, address, city, postalCode, countries },
+      payload: { fullName, address, city, postalCode, country },
     });
     Cookies.set(
       "cart",
@@ -59,7 +53,7 @@ const ShippingScreen = () => {
           address,
           city,
           postalCode,
-          countries,
+          country,
         },
       })
     );
@@ -145,9 +139,9 @@ const ShippingScreen = () => {
               <label htmlFor='countries'>Countries</label>
               <select
                 name=''
-                id='countries'
+                id='country'
                 className='w-full'
-                {...register("countries", {
+                {...register("country", {
                   required: "Please choose your country",
                 })}
               >
@@ -156,7 +150,7 @@ const ShippingScreen = () => {
                 ))}
               </select>
               {errors.countries && (
-                <p className='text-red-500'>{errors.countries.message}</p>
+                <p className='text-red-500'>{errors.country.message}</p>
               )}
             </div>
             <div className='mb-4 flex justify-between'>

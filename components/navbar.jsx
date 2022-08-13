@@ -13,7 +13,6 @@ const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState();
   const { state, dispatch } = useContext(Store);
   const { cart } = state;
-  console.log(cart);
 
   useEffect(() => {
     setCartItemsCount(cart.cartItems.reduce((a, c) => a + c.quantity, 0));

@@ -1,27 +1,67 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import Router, { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useState } from "react";
 import { useContext } from "react";
 import CheckoutWizard from "../components/CheckoutWizard";
 import Navbar from "../components/navbar";
 import { Store } from "../utils/Store";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getError } from "../utils/error";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const PlaceOrderScreen = () => {
   const { state, dispatch } = useContext(Store);
+  const [loading, setLoading] = useState(false);
   const { cart } = state;
   const { shippingAddress, paymentMethod, cartItems } = cart;
+  const router = useRouter();
 
-  const itemsPrice = cartItems.reduce(
-    (acc, cur) => acc + cur.quantity * cur.price,
-    0
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+  const itemsPrice = round2(
+    cartItems.reduce((acc, cur) => acc + cur.quantity * cur.price, 0)
   );
-  const taxPrice = cartItems.reduce((acc, cur) => acc + cur.quantity * 0, 0);
-  const shippingPrice = cartItems.reduce(
-    (acc, cur) => acc + cur.quantity * 0,
-    0
-  );
-  const totalPrice = cartItems.reduce((acc, cur) => acc + cur.quantity * 0, 0);
+  const taxPrice = round2(itemsPrice * 0.15);
+  const shippingPrice = round2(itemsPrice > 200 ? 0 : 15);
+  const totalPrice = round2(itemsPrice + shippingPrice + taxPrice);
+
+  useEffect(() => {
+    if (!paymentMethod) {
+      router.push("/payment");
+    }
+  }, [paymentMethod, router]);
+
+  const placeOrderHandler = async () => {
+    setLoading(true);
+    try {
+      const { data } = await axios.post("/api/orders", {
+        orderItems: cartItems[0],
+        shippingAddress,
+        paymentMethod,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice,
+      });
+      setLoading(false);
+      dispatch({ type: "CART_CLEAR_ITEMS" });
+      Cookies.set(
+        "cart",
+        JSON.stringify({
+          ...cart,
+          cartItems: [],
+        })
+      );
+      router.push(`/orders/${data._id}`);
+    } catch (error) {
+      setLoading(false);
+      toast.error(getError(error));
+    }
+  };
   return (
     <div>
       <Head>
@@ -29,6 +69,7 @@ const PlaceOrderScreen = () => {
         <meta name='description' content='Zicomm' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
+      <ToastContainer position='top-center' />
       <div className='flex min-h-screen justify-between flex-col'>
         <header>
           <Navbar />
@@ -46,9 +87,9 @@ const PlaceOrderScreen = () => {
                 <div className='card p-5'>
                   <h2 className='mb-2 text-lg'>Shipping Address</h2>
                   <div>
-                    {shippingAddress?.fullName}, {shippingAddress?.address},{" "}
-                    {shippingAddress?.city}, {shippingAddress?.postalCode},
-                    {shippingAddress?.countries}
+                    {shippingAddress.fullName}, {shippingAddress.address},{" "}
+                    {shippingAddress.city}, {shippingAddress.postalCode},
+                    {shippingAddress.countries}
                   </div>
                   <div>
                     <Link href='/shipping'>Edit</Link>
@@ -156,3 +197,5 @@ const PlaceOrderScreen = () => {
 };
 
 export default PlaceOrderScreen;
+
+PlaceOrderScreen.auth = true;
