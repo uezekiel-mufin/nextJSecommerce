@@ -7,18 +7,20 @@ const handler = async (req, res) => {
 
   if (!session) {
     console.log(req);
-    return res.status(401).send("sign in needed");
+    return res.status(401).send(session);
   }
 
-  const { user } = session;
-  await db.connect();
-  const newOrder = new Order({
-    ...req.body,
-    user: user._id,
-  });
+  if (session) {
+    const { user } = session;
+    await db.connect();
+    const newOrder = new Order({
+      ...req.body,
+      user: user._id,
+    });
 
-  const order = await newOrder.save();
-  res.status(201).send(order);
+    const order = await newOrder.save();
+    res.status(201).send(order);
+  }
 };
 
 export default handler;

@@ -5,7 +5,7 @@ import Navbar from "../components/navbar";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutWizard from "../components/CheckoutWizard";
-import countries from "countries-list";
+
 import { Store } from "../utils/Store";
 import { useContext } from "react";
 import Cookies from "js-cookie";
@@ -30,20 +30,15 @@ const ShippingScreen = () => {
     setValue("address", shippingAddress.address);
     setValue("city", shippingAddress.city);
     setValue("postalCode", shippingAddress.postalCode);
-    setValue("countries", shippingAddress.countries);
+    setValue("country", shippingAddress.country);
   }, [setValue, shippingAddress]);
-
-  const countryNames = Object.values(countries.countries).map(
-    (country) => country.name
-  );
-  console.log(countries);
-  console.log(countryNames);
 
   const submitHandler = ({ fullName, address, city, postalCode, country }) => {
     dispatch({
       type: "SAVE_SHIPPING_ADDRESS",
       payload: { fullName, address, city, postalCode, country },
     });
+
     Cookies.set(
       "cart",
       JSON.stringify({
@@ -120,6 +115,19 @@ const ShippingScreen = () => {
                 <p className='text-red-500'>{errors.city.message}</p>
               )}
             </div>
+            <div className='mb-4'>
+              <label htmlFor='country'>Country</label>
+              <input
+                id='country'
+                className='w-full'
+                {...register("country", {
+                  required: "Please enter your country",
+                })}
+              />
+              {errors.country && (
+                <p className='text-red-500'>{errors.country.message}</p>
+              )}
+            </div>
 
             <div className='mb-4'>
               <label htmlFor='postalCode'>Postal Code</label>
@@ -135,13 +143,13 @@ const ShippingScreen = () => {
                 <p className='text-red-500'>{errors.postalCode.message}</p>
               )}
             </div>
-            <div className='mb-4'>
+            {/* <div className='mb-4'>
               <label htmlFor='countries'>Countries</label>
               <select
                 name=''
-                id='country'
+                id='countriess'
                 className='w-full'
-                {...register("country", {
+                {...register("countriess", {
                   required: "Please choose your country",
                 })}
               >
@@ -149,10 +157,10 @@ const ShippingScreen = () => {
                   <option key={country}>{country}</option>
                 ))}
               </select>
-              {errors.countries && (
-                <p className='text-red-500'>{errors.country.message}</p>
+              {errors.countriess && (
+                <p className='text-red-500'>{errors.countriess.message}</p>
               )}
-            </div>
+            </div> */}
             <div className='mb-4 flex justify-between'>
               <button className='primary-button'>Next</button>
             </div>

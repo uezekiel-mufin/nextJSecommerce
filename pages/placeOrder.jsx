@@ -39,7 +39,7 @@ const PlaceOrderScreen = () => {
     setLoading(true);
     try {
       const { data } = await axios.post("/api/orders", {
-        orderItems: cartItems[0],
+        orderItems: cartItems,
         shippingAddress,
         paymentMethod,
         itemsPrice,
@@ -89,7 +89,7 @@ const PlaceOrderScreen = () => {
                   <div>
                     {shippingAddress.fullName}, {shippingAddress.address},{" "}
                     {shippingAddress.city}, {shippingAddress.postalCode},
-                    {shippingAddress.countries}
+                    {shippingAddress.country}
                   </div>
                   <div>
                     <Link href='/shipping'>Edit</Link>
