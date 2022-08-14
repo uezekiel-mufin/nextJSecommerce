@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 const LoginScreen = () => {
   console.log(useSession());
@@ -26,14 +27,21 @@ const LoginScreen = () => {
   const {
     handleSubmit,
     register,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const formHandler = async ({ email, password }) => {
-    console.log(email, password);
+  const formHandler = async ({ name, email, password }) => {
+    console.log(email, password, name);
     console.log(session);
 
     try {
+      await axios.post(`/api/auth/signup`, {
+        name,
+        email,
+        password,
+      });
+
       const result = await signIn("credentials", {
         redirect: false,
         email,
@@ -52,7 +60,7 @@ const LoginScreen = () => {
   return (
     <div>
       <Head>
-        <title>Login</title>
+        <title>Create Account</title>
         <meta name='description' content='Zicomm' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
@@ -66,14 +74,28 @@ const LoginScreen = () => {
             className='mx-auto max-w-screen-md'
             onSubmit={handleSubmit(formHandler)}
           >
-            <h1 className='mb-4 text-xl '>Login</h1>
+            <h1 className='mb-4 text-xl '>Create Account</h1>
+            <div className='mb-4'>
+              <label htmlFor='name'>Full name</label>
+              <input
+                type='text'
+                id='name'
+                autoFocus
+                className='w-full'
+                {...register("name", {
+                  required: "Please enter full name",
+                })}
+              />
+              {errors.name && (
+                <p className='text-red-500'>{errors.name.message}</p>
+              )}
+            </div>
             <div className='mb-4'>
               <label htmlFor='email'>Email</label>
               <input
                 type='email'
                 id='email'
                 className='w-full'
-                autoFocus
                 {...register("email", {
                   required: "Please enter email address",
                   pattern: {
@@ -92,12 +114,11 @@ const LoginScreen = () => {
                 type='password'
                 id='password'
                 className='w-full'
-                autoFocus
                 {...register("password", {
                   required: "Please enter your password",
                   minLength: {
                     value: 6,
-                    message: "password should be more than 6 chars",
+                    message: "password should be more than 5 chars",
                   },
                 })}
               />
@@ -106,7 +127,30 @@ const LoginScreen = () => {
               )}
             </div>
             <div className='mb-4'>
-              <button className='primary-button'>Login</button>
+              <label htmlFor='password'>confirmPassword</label>
+              <input
+                type='password'
+                id='confirmconfirmPassword'
+                className='w-full'
+                {...register("confirmPassword", {
+                  required: "Please enter your password",
+                  validate: (value) => value === getValues("password"),
+                  minLength: {
+                    value: 6,
+                    message: "password should be more than 5 chars",
+                  },
+                })}
+              />
+              {errors.confirmPassword && (
+                <p className='text-red-500'>{errors.confirmPassword.message}</p>
+              )}
+              {errors.confirmPassword &&
+                errors.confirmPassword.type === "validate" && (
+                  <div className='text-red-500'>Pasword do not match</div>
+                )}
+            </div>
+            <div className='mb-4'>
+              <button className='primary-button'>create</button>
             </div>
             <div className='mb-4'>
               Dont&apos;t have an account? &nbsp;

@@ -56,7 +56,7 @@ const PlaceOrderScreen = () => {
           cartItems: [],
         })
       );
-      router.push(`/orders/${data._id}`);
+      router.push(`/order/${data._id}`);
     } catch (error) {
       setLoading(false);
       toast.error(getError(error));

@@ -5,7 +5,6 @@ import Navbar from "../components/navbar";
 import { useForm } from "react-hook-form";
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutWizard from "../components/CheckoutWizard";
-
 import { Store } from "../utils/Store";
 import { useContext } from "react";
 import Cookies from "js-cookie";
@@ -143,24 +142,6 @@ const ShippingScreen = () => {
                 <p className='text-red-500'>{errors.postalCode.message}</p>
               )}
             </div>
-            {/* <div className='mb-4'>
-              <label htmlFor='countries'>Countries</label>
-              <select
-                name=''
-                id='countriess'
-                className='w-full'
-                {...register("countriess", {
-                  required: "Please choose your country",
-                })}
-              >
-                {countryNames.map((country) => (
-                  <option key={country}>{country}</option>
-                ))}
-              </select>
-              {errors.countriess && (
-                <p className='text-red-500'>{errors.countriess.message}</p>
-              )}
-            </div> */}
             <div className='mb-4 flex justify-between'>
               <button className='primary-button'>Next</button>
             </div>
