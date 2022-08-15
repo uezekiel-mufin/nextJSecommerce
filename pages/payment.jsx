@@ -88,5 +88,5 @@ const Payment = () => {
   );
 };
 
-export default Payment;
 Payment.auth = true;
+export default Payment;

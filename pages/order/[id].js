@@ -92,7 +92,7 @@ const OrderScreen = () => {
       }
     } else {
       const loadPaypalScript = async () => {
-        const { data: clientId } = await axios.get("api/keys/paypal");
+        const { data: clientId } = await axios.get("/api/keys/paypal");
         paypalDispatch({
           type: "resetOptions",
           value: {
@@ -114,7 +114,7 @@ const OrderScreen = () => {
     paymentMethod,
     orderItems,
     itemsPrice,
-
+    taxPrice,
     shippingPrice,
     totalPrice,
     isPaid,
@@ -254,6 +254,13 @@ const OrderScreen = () => {
                       <div className='mb-2 flex justify-between'>
                         <div>Shipping</div>
                         <div>${shippingPrice}</div>
+                      </div>
+                    </li>
+
+                    <li>
+                      <div className='mb-2 flex justify-between'>
+                        <div>Tax</div>
+                        <div>${taxPrice}</div>
                       </div>
                     </li>
                     <li>

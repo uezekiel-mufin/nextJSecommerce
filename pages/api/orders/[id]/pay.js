@@ -1,4 +1,5 @@
 import { getSession } from "next-auth/react";
+import Order from "../../../../models/Order";
 import db from "../../../../utils/db";
 
 const handler = async (req, res) => {
@@ -31,3 +32,4 @@ const handler = async (req, res) => {
     res.status(404).send({ message: "Error: order not found" });
   }
 };
+export default handler;
