@@ -45,7 +45,15 @@ const CartScreen = () => {
           <Navbar />
         </header>
         <main className='container m-auto mt-4 px-4 '>
-          <h1 className='mb-4 text-xl'>Shopping Cart</h1>
+          <h1 className='mb-4 text-xl flex justify-between'>
+            {" "}
+            <span> Shopping Cart</span>
+            {state.cart.cartItems.length >= 1 && (
+              <Link href='/'>
+                <a> Continue Shopping</a>
+              </Link>
+            )}
+          </h1>
           {state.cart.cartItems.length === 0 ? (
             <div>
               Cart is Empty. <Link href='/'>Go Shopping</Link>
