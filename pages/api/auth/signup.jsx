@@ -1,6 +1,7 @@
 import User from "../../../models/User";
 import db from "../../../utils/db";
 import bcryptjs from "bcryptjs";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") return;
 

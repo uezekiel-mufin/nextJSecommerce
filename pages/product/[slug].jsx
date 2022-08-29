@@ -25,16 +25,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-// export async function getStaticPaths() {
-//   const paths = data.products.map((product) => ({
-//     params: {
-//       slug: product.slug,
-//     },
-//   }));
-//   console.log(paths);
 
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }

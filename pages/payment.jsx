@@ -7,6 +7,7 @@ import { useState, useContext } from "react";
 import { Store } from "../utils/Store";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 const Payment = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
@@ -76,6 +77,7 @@ const Payment = () => {
               >
                 Back
               </button>
+
               <button className='primary-button'>Next</button>
             </div>
           </form>
