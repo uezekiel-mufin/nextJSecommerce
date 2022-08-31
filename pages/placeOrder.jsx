@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import  { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useContext } from "react";
@@ -56,7 +56,7 @@ const PlaceOrderScreen = () => {
           cartItems: [],
         })
       );
-      router.push(`/order/${data._id}`);
+      // router.push(`/order/${data._id}`);
     } catch (error) {
       setLoading(false);
       toast.error(getError(error));

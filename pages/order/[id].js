@@ -174,8 +174,8 @@ const OrderScreen = () => {
           ) : error ? (
             <div className='alert-error'>{error}</div>
           ) : (
-            <div className='grid md:grid-cols-4 md:gap-5'>
-              <div className='overflow-x-auto md:col-span-3'>
+            <div className='flex flex-col md:grid md:grid-cols-4 md:gap-5'>
+              <div className='overflow-x-auto  md:col-span-3'>
                 <div className='card p-5'>
                   <h2 className='mb-2 text-lg'>Shipping Address</h2>
                   <div>
@@ -243,7 +243,7 @@ const OrderScreen = () => {
               <div>
                 <div className='card p-5'>
                   <h2 className='mb-2 text-lg'>Order Summary</h2>
-                  <ul>
+                  <ul className='w-full'>
                     <li>
                       <div className='mb-2 flex justify-between'>
                         <div>Items</div>
@@ -271,17 +271,15 @@ const OrderScreen = () => {
                     </li>
 
                     {!isPaid && (
-                      <li>
+                      <li className='w-full'>
                         {isPending ? (
                           <div>Loading...</div>
                         ) : (
-                          <div className='w-full'>
-                            <PayPalButtons
-                              createOrder={createOrder}
-                              onApprove={onApprove}
-                              onError={onError}
-                            ></PayPalButtons>
-                          </div>
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                          ></PayPalButtons>
                         )}
                         {loadingPay && <div>Loading...</div>}
                       </li>
